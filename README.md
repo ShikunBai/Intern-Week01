@@ -38,6 +38,7 @@
 因此，本项目实现了“结构化结果 + Pydantic 验证 + 证据值核对”，但不使用 OpenAI 原生的 `response.output_parsed`。
 
 ## 项目结构
+
     data/
         stroke_data.csv
     outputs/
@@ -69,6 +70,7 @@
 ## 安装
 
 在项目根目录执行：
+
     python3 -m venv .venv
     source .venv/bin/activate
     python -m pip install -r requirements.txt
@@ -76,9 +78,11 @@
 ## 环境变量配置
 
 复制示例文件：
+
     cp .env.example .env
 
 然后编辑 `.env`，填入自己的 DeepSeek API Key：
+
     DEEPSEEK_API_KEY=你的_DeepSeek_API_Key
     DEEPSEEK_MODEL=deepseek-v4-flash
     DEEPSEEK_BASE_URL=https://api.deepseek.com
@@ -88,21 +92,27 @@
 ## 运行项目
 
 生成 pandas 数据摘要：
+
     python src/data_summary.py
 
 进行第一次非流式 API 调用：
+
     python src/llm_client.py
 
 运行 V1 Prompt 对照实验：
+
     python src/prompt_runner.py v1
 
 运行 V2 Prompt 对照实验：
+
     python src/prompt_runner.py v2
 
 生成正常的结构化解读：
+
     python src/interpreter.py
 
 生成“证据不足”的结构化解读：
+
     python src/interpreter.py insufficient-evidence
 
 注意：两次运行 `interpreter.py` 都会写入 `outputs/structured-result.json`。项目中已分别备份成功结果和证据不足结果。
@@ -110,9 +120,11 @@
 ## 测试
 
 执行离线测试：
+
     python -m pytest tests/ -v
 
 最终结果：
+
     4 passed
 
 四个测试均使用假客户端或本地数据，不访问真实 DeepSeek API，也不需要真实 API Key。
@@ -122,6 +134,7 @@
 `outputs/summary.json` 包含总行数、缺失数，以及每个工作类型的样本数和平均血糖水平。
 
 结构化结果包含以下固定字段：
+
     {
       "conclusion": "...",
       "evidence": [
