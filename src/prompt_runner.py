@@ -36,11 +36,11 @@ def main() -> int:
         prompt = build_prompt(version)
         client, model = create_client_and_get_model()
 
-        response = client.responses.create(
+        response = client.chat.completions.create(
             model=model,
-            input=[
+            messages=[
                 {
-                    "role": "developer",
+                    "role": "system",
                     "content": "你是一名数据分析助手。请使用中文回答。",
                 },
                 {
@@ -48,7 +48,13 @@ def main() -> int:
                     "content": prompt,
                 },
             ],
+            stream=False,
         )
+
+        if not response.choices or not response.choices[0].message.content:
+            raise RuntimeError("模型没有返回文本内容。")
+
+        output_text = response.choices[0].message.content.strip()
     except ValueError as error:
         print(f"配置或文件错误：{error}", file=sys.stderr)
         return 2
@@ -56,18 +62,16 @@ def main() -> int:
         print("请求超时：请检查网络后重试。", file=sys.stderr)
         return 3
     except APIConnectionError:
-        print("连接失败：请检查网络或 OPENAI_BASE_URL 配置。", file=sys.stderr)
+        print("连接失败：请检查网络或 DEEPSEEK_BASE_URL 配置。", file=sys.stderr)
         return 4
     except RateLimitError:
-        print("请求被限制（429）：请检查 API 额度或等待后重试。", file=sys.stderr)
+        print("请求被限制（429）：请检查 DeepSeek 额度或等待后重试。", file=sys.stderr)
         return 5
     except APIStatusError as error:
         print(f"上游 API 返回错误，状态码：{error.status_code}。", file=sys.stderr)
         return 6
-
-    output_text = response.output_text.strip()
-    if not output_text:
-        print("模型没有返回文本内容。", file=sys.stderr)
+    except RuntimeError as error:
+        print(f"响应错误：{error}", file=sys.stderr)
         return 7
 
     output_path = PROJECT_ROOT / "outputs" / f"{version}-response.txt"

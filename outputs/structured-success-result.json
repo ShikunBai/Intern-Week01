@@ -1,0 +1,51 @@
+{
+  "conclusion": "不同工作类型的平均血糖水平存在差异，其中Self-employed平均血糖最高（112.65），children最低（94.4）；样本量分布极不均衡，Private样本量最大（2925），Never_worked样本量最小（22）。",
+  "evidence": [
+    {
+      "metric": "Govt_job 样本数",
+      "value": "657"
+    },
+    {
+      "metric": "Govt_job 平均血糖水平",
+      "value": "107.78"
+    },
+    {
+      "metric": "Never_worked 样本数",
+      "value": "22"
+    },
+    {
+      "metric": "Never_worked 平均血糖水平",
+      "value": "96.04"
+    },
+    {
+      "metric": "Private 样本数",
+      "value": "2925"
+    },
+    {
+      "metric": "Private 平均血糖水平",
+      "value": "106.8"
+    },
+    {
+      "metric": "Self-employed 样本数",
+      "value": "819"
+    },
+    {
+      "metric": "Self-employed 平均血糖水平",
+      "value": "112.65"
+    },
+    {
+      "metric": "children 样本数",
+      "value": "687"
+    },
+    {
+      "metric": "children 平均血糖水平",
+      "value": "94.4"
+    }
+  ],
+  "limitations": [
+    "数据摘要未提供差异的统计显著性检验，无法判断差异是否具有统计意义。",
+    "样本量极不均衡，小样本类别的平均值可能不稳定。",
+    "摘要未包含年龄、病史等混杂因素，不能将工作类型与血糖水平的差异解释为因果关系。"
+  ],
+  "next_step": "建议对各工作类型的平均血糖水平进行方差分析（ANOVA）并配合事后检验，以评估差异是否统计显著，同时考虑控制年龄等变量进行回归分析。"
+}
