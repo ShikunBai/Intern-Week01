@@ -3,3 +3,4 @@ pydantic
 pandas
 python-dotenv
 pytest
+httpx
